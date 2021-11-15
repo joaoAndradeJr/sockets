@@ -7,10 +7,10 @@ const getAll = async () => {
   return messages;
 };
 
-const getNickname = (onlineUsersObj, userId) => {
+const getNickname = async (onlineUsersObj, userId) => {
   const online = Object.entries(onlineUsersObj);
   const search = online.find((e) => (e[0] === userId ? e[1] : false));
-  return search[1] || search[0];
+  return search ? search[1] : false;
 };
 
 const create = async (message) => {
