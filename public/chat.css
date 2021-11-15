@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+
+h3 {
+  margin: 2rem;
+}
+
 .main {
   height: 90rem;
   margin: auto;
@@ -10,7 +15,6 @@
 }
 
 .container {
-  background-color: aquamarine;
   border: 2px solid black;
   display: flex;
   flex-wrap: wrap;
@@ -21,17 +25,25 @@
 }
 
 .users-container {
-  background-color: rgb(76, 27, 122);
-  border: 2px solid black;
-  height: 30rem;
-  width: 20rem;
+  background-color: rgb(111, 52, 167);
+  border: 1px solid black;
+  color: white;
+  height: 38.6rem;
+  width: 17rem;
+}
+
+.messages-container {
+  background-color: rgb(40, 61, 155);
+  color: white;
+  height: 38.75rem;
+  width: 32.87rem;
 }
 
 .type-message-container {
-  align-self: flex-end;
-  border: 1px gray solid;
-  height: 12rem;
-  width: 50rem;
+  background-color: blanchedalmond;
+  border: 1px black solid;
+  height: 1.2rem;
+  width: 99.9%;
 }
 
 .users {
@@ -42,6 +54,15 @@
   width: 17rem;
 }
 
-.users h3 {
-  margin-left: 4rem;
+.all-messages {
+  padding: 1rem;
+}
+
+.message-li {
+  margin-left: 1.5rem;
+  margin-top: 1rem;
+}
+
+.message-box {
+  width: 87%;
 }

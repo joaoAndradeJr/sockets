@@ -43,6 +43,7 @@
                 <% const chat = `${message.timestamps} - ${message.nickname}: ${message.message}` %>
                 <li
                   data-testid=<%= message.nickname %>
+                  class="message-li"
                 >
                   <%= chat %>
                 </li>
@@ -55,6 +56,7 @@
         <div class="type-messages">
           <label for="message-box">
             <input
+              class="message-box"
               id="message-box"
               data-testid="message-box"
               type="text"
