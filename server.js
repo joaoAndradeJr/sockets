@@ -13,6 +13,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use('/public', express.static('./public'));
+
 const http = require('http').createServer(app);
 
 const io = require('socket.io')(http, corsOptions);
@@ -26,7 +28,6 @@ app.set('views', './views');
 
 app.get('/', async (_req, res) => {
   const messages = await chatModels.getAll();
-  console.log(messages)
   res.render('chat', { messages });
 });
 

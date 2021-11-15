@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost:3000/public/chat.css">
     <script src="/socket.io/socket.io.js"></script>
     <title>webchat</title>
   </head>
@@ -108,14 +109,6 @@
       //   newNickname = document.getElementById('nickname-box').value;
       //   socket.emit('changeNickname', newNickname);
       // });
-
-      // const InsertHistory = (history) => {
-        
-      //   history.forEach((oldMessage) => {
-      //     const { message, nickname, timestamps } = oldMessage;
-      //     insertMessage(`${timestamps} - ${nickname}: ${message}`);
-      //   });
-      // };
       
       // socket.on('userOnline', (nickname) => insertOnlineUser(nickname));
       // socket.on('chatHistory', (history) => InsertHistory(history));
