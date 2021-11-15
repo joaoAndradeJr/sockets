@@ -78,9 +78,9 @@
       
       const socket = window.io();
 
-      // window.onbeforeunload = function(event) {
-      //   socket.disconnect();
-      // };
+      window.onbeforeunload = function(event) {
+        socket.disconnect();
+      };
 
       const insertMessage = (message) => {
         const { timestamps, nickname, message: chatMessage } = message;
@@ -119,9 +119,9 @@
        const users = document.getElementById('onlineUsers');
        while (users.firstChild) {
          users.removeChild(users.firstChild);
-       }
-      }
-      
+       };
+      };
+
       socket.on('usersOnline', (nickname) => {
         removeOnlineUsers();
         Object.entries(nickname).forEach((element) => {
@@ -129,7 +129,9 @@
           console.log(element)
         })},
       );
+
       socket.on('message', (message) => insertMessage(message));
+
       </script>
   </body>
 </html>

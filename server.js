@@ -41,9 +41,10 @@ io.on('connection', async (socket) => {
     io.emit('message', sendMessage);
   });
 
-  // socket.on('disconnect', () => {
-  //   socket.emit('serverMessage', `Xiii! ${socket.id} acabou de se desconectar! :(`);
-  // });
+  socket.on('disconnect', () => {
+    delete chatController.onlineUsers[socket.id];
+    socket.broadcast.emit('usersOnline', chatController.onlineUsers);
+  });
 });
 
 app.set('view engine', 'ejs');
