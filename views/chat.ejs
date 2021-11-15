@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="chat.css" />
-    
+    <script src="/socket.io/socket.io.js"></script>
     <title>webchat</title>
   </head>
   <body class="main">
-    
     <section class="container">
       <div class="users-container">
         <div>
@@ -31,12 +29,20 @@
         </div>
         <div class="online-users">
           <h3>Usuários Online</h3>
-          <ul id="usersOnline"></ul>
+          <ul id="onlineUsers">
+            <% onlineUsers.forEach((user) => { %>
+              <li><%= user %></li>
+            <% }); %>
+          </ul>
         </div>
       </div>
       <div class="messages-container">
         <div class="all-messages">
-          <ul id="messages"></ul>
+          <ul id="messages">
+            <% chatHistory.forEach((message) => { %>
+              <li><%= message %></li>
+            <% }); %>
+          </ul>
         </div>
       </div>
       <div class="type-message-container">
@@ -59,20 +65,21 @@
         </div>
       </div>
     </section>
-    <script src="/socket.io/socket.io.js"></script>
+    
     <script>
+      
+      const socket = io();
+
       window.onbeforeunload = function(event) {
         socket.disconnect();
       };
-      
-      const socket = io();
-      
-      const messageBoxList = document.getElementById('messages');
+
       const insertMessage = (message) => {
         const li = document.createElement('li');
         li.setAttribute('data-testid', 'message');
-        li.innerText = message;
-        messageBoxList.appendChild(li);
+        const liText = document.createTextNode(message);
+        li.appendChild(liText);
+        document.getElementById('messages').appendChild(li);
       };
       
       const sendMessageBtn = document.getElementById('send-button');
@@ -83,12 +90,12 @@
         document.getElementById('message-box').value = '';
       });
       
-      const onlineUsers = document.getElementById('usersOnline');
       const insertOnlineUser = (nickname) => {
         const li = document.createElement('li');
         li.setAttribute('data-testid', 'online-user');
-        li.innerText = nickname;
-        onlineUsers.appendChild(li);
+        const liText = document.createTextNode(nickname);
+        li.appendChild(liText);
+        document.getElementById('onlineUsers').appendChild('li');
       }
 
       const changeNickname = document.getElementById('nickname-button');
@@ -97,16 +104,16 @@
         socket.emit('changeNickname', newNickname);
       });
 
-      const InsertHistory = (history) => {
+      // const InsertHistory = (history) => {
         
-        history.forEach((oldMessage) => {
-          const { message, nickname, timestamps } = oldMessage;
-          insertMessage(`${timestamps} - ${nickname}: ${message}`);
-        });
-      };
+      //   history.forEach((oldMessage) => {
+      //     const { message, nickname, timestamps } = oldMessage;
+      //     insertMessage(`${timestamps} - ${nickname}: ${message}`);
+      //   });
+      // };
       
-      socket.on('userOnline', (userId) => insertOnlineUser(userId));
-      socket.on('chatHistory', (history) => InsertHistory(history));
+      socket.on('userOnline', (nickname) => insertOnlineUser(nickname));
+      // socket.on('chatHistory', (history) => InsertHistory(history));
       socket.on('message', (message) => insertMessage(message));
       
       </script>

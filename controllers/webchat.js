@@ -1,14 +1,8 @@
-const time = () => {
-  const now = new Date();
-  const date = `${now.getDate()}-${now.getMonth()}-${now.getFullYear()}`;
-  const hour = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-  const msgTime = `${date} ${hour}`;
-  return msgTime;
-};
+const time = require('../utils/getTime');
 
 const chatModel = require('../models/webchat');
 
-const onlineUsers = {};
+const onlineUsers = [];
 
 const getAll = async () => {
   const messages = await chatModel.getAll();
@@ -22,9 +16,9 @@ const getNickname = (arr, userId) => {
 };
 
 module.exports = (io) => io.on('connection', async (socket) => {
-  const randomId = socket.id.substr(0, 16);
-  io.emit('userOnline', randomId);
-  io.emit('chatHistory', await getAll());
+  // const randomId = socket.id.substr(0, 16);
+  io.emit('userOnline', onlineUsers);
+  socket.emit('chatHistory', await getAll());
   socket.on('changeNickname', (newNickname) => {
     onlineUsers[socket.id] = newNickname;
     io.emit('userOnline', onlineUsers[socket.id]);
