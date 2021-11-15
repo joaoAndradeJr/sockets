@@ -26,17 +26,19 @@ h3 {
 }
 
 .users-container {
-  background-color: rgb(111, 52, 167);
+  background-color: rgb(37, 35, 124);
   border: 1px solid black;
   color: white;
   height: 38.6rem;
+  overflow: scroll;
   width: 17rem;
 }
 
 .messages-container {
-  background-color: rgb(40, 61, 155);
+  background-color: rgb(55, 84, 107);
   color: white;
   height: 38.75rem;
+  overflow: scroll;
   width: 32.87rem;
 }
 
@@ -47,12 +49,9 @@ h3 {
   width: 99.9%;
 }
 
-.users {
-  background-color: rgb(95, 187, 190);
-  border: 1px grey solid;
-  height: 38rem;
-  justify-content: center;
-  width: 17rem;
+.online-user {
+  margin-bottom: 0.4rem;
+  margin-left: 1.5rem;
 }
 
 .all-messages {

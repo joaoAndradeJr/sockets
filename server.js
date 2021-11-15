@@ -24,24 +24,26 @@ const time = require('./utils/getTime');
 const chatController = require('./controllers/webchat');
 
 io.on('connection', async (socket) => {
-  // const randomId = socket.id.substr(0, 16);
-  io.emit('userOnline', chatController.onlineUsers);
-  // socket.emit('chatHistory', await chatController.getAll());
+  const randomId = socket.id.substr(0, 16);
+  chatController.onlineUsers = { ...chatController.onlineUsers, [socket.id]: randomId };
+
+  io.emit('usersOnline', chatController.onlineUsers);
+
   socket.on('changeNickname', (newNickname) => {
     chatController.onlineUsers[socket.id] = newNickname;
-    io.emit('userOnline', chatController.onlineUsers[socket.id]);
+    io.emit('usersOnline', chatController.onlineUsers);
   });
 
   socket.on('message', async ({ chatMessage, nickname }) => {
-    const nick = chatController.getNickname(chatController.onlineUsers, socket.id);
+    const nick = chatController.getNickname(chatController.onlineUsers, nickname);
     const newMessage = { chat: chatMessage, name: `${nick || nickname}`, timestamp: time() };
     const sendMessage = await chatController.create(newMessage);
     io.emit('message', sendMessage);
   });
 
-  socket.on('disconnect', () => {
-    socket.emit('serverMessage', `Xiii! ${socket.id} acabou de se desconectar! :(`);
-  });
+  // socket.on('disconnect', () => {
+  //   socket.emit('serverMessage', `Xiii! ${socket.id} acabou de se desconectar! :(`);
+  // });
 });
 
 app.set('view engine', 'ejs');

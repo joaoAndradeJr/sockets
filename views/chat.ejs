@@ -94,30 +94,42 @@
       
       const sendMessageBtn = document.getElementById('send-button');
       sendMessageBtn.addEventListener('click', () => {
-        const nickname = socket.id.substr(0, 15);
+        const nickname = socket.id;
         const chatMessage = document.getElementById('message-box').value;
         socket.emit('message', { chatMessage, nickname });
         document.getElementById('message-box').value = '';
       });
       
-      // const insertOnlineUser = (nickname) => {
-      //   const li = document.createElement('li');
-      //   li.setAttribute('data-testid', 'online-user');
-      //   const liText = document.createTextNode(nickname);
-      //   li.appendChild(liText);
-      //   document.getElementById('onlineUsers').appendChild('li');
-      // }
+      const insertOnlineUser = (nickname) => {
+        const li = document.createElement('li');
+        li.setAttribute('data-testid', 'online-user');
+        li.setAttribute('class', 'online-user');
+        const liText = document.createTextNode(nickname);
+        li.appendChild(liText);
+        document.getElementById('onlineUsers').appendChild(li);
+      }
 
-      // const changeNickname = document.getElementById('nickname-button');
-      // changeNickname.addEventListener('click', () => {
-      //   newNickname = document.getElementById('nickname-box').value;
-      //   socket.emit('changeNickname', newNickname);
-      // });
+      const changeNicknameButton = document.getElementById('nickname-button');
+      changeNicknameButton.addEventListener('click', () => {
+        nickname = document.getElementById('nickname-box').value;
+        socket.emit('changeNickname', nickname);
+      });
+
+      const removeOnlineUsers = () => {
+       const users = document.getElementById('onlineUsers');
+       while (users.firstChild) {
+         users.removeChild(users.firstChild);
+       }
+      }
       
-      // socket.on('userOnline', (nickname) => insertOnlineUser(nickname));
-      // socket.on('chatHistory', (history) => InsertHistory(history));
+      socket.on('usersOnline', (nickname) => {
+        removeOnlineUsers();
+        Object.entries(nickname).forEach((element) => {
+          insertOnlineUser(element[1]);
+          console.log(element)
+        })},
+      );
       socket.on('message', (message) => insertMessage(message));
-      
       </script>
   </body>
 </html>
