@@ -25,7 +25,7 @@
             id="nickname-button"
             data-testid="nickname-button"
           >
-            Save Nickname
+            Save
           </button>
         </div>
         <div class="online-users">
@@ -42,7 +42,7 @@
               <% messages.forEach((message) => { %>
                 <% const chat = `${message.timestamps} - ${message.nickname}: ${message.message}` %>
                 <li
-                  data-testid=<%= message.nickname %>
+                  data-testid="message"
                   class="message-li"
                 >
                   <%= chat %>
@@ -76,27 +76,29 @@
     
     <script>
       
-      const socket = io();
+      const socket = window.io();
 
       // window.onbeforeunload = function(event) {
       //   socket.disconnect();
       // };
 
-      // const insertMessage = (message) => {
-      //   const li = document.createElement('li');
-      //   li.setAttribute('data-testid', 'message');
-      //   const liText = document.createTextNode(message);
-      //   li.appendChild(liText);
-      //   document.getElementById('messages').appendChild(li);
-      // };
+      const insertMessage = (message) => {
+        const { timestamps, nickname, message: chatMessage } = message;
+        const li = document.createElement('li');
+        li.setAttribute('data-testid', 'message');
+        li.setAttribute('class', 'message-li');
+        const liText = document.createTextNode(`${timestamps} - ${nickname}: ${chatMessage}`);
+        li.appendChild(liText);
+        document.getElementById('messages').appendChild(li);
+      };
       
-      // const sendMessageBtn = document.getElementById('send-button');
-      // sendMessageBtn.addEventListener('click', () => {
-      //   const nickname = socket.id.substr(0, 15);
-      //   const chatMessage = document.getElementById('message-box').value;
-      //   socket.emit('message', { chatMessage, nickname });
-      //   document.getElementById('message-box').value = '';
-      // });
+      const sendMessageBtn = document.getElementById('send-button');
+      sendMessageBtn.addEventListener('click', () => {
+        const nickname = socket.id.substr(0, 15);
+        const chatMessage = document.getElementById('message-box').value;
+        socket.emit('message', { chatMessage, nickname });
+        document.getElementById('message-box').value = '';
+      });
       
       // const insertOnlineUser = (nickname) => {
       //   const li = document.createElement('li');
@@ -114,7 +116,7 @@
       
       // socket.on('userOnline', (nickname) => insertOnlineUser(nickname));
       // socket.on('chatHistory', (history) => InsertHistory(history));
-      // socket.on('message', (message) => insertMessage(message));
+      socket.on('message', (message) => insertMessage(message));
       
       </script>
   </body>

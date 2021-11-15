@@ -16,6 +16,7 @@ h3 {
 
 .container {
   border: 2px solid black;
+  border-right: 3px solid black;
   display: flex;
   flex-wrap: wrap;
   height: 40rem;
