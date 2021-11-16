@@ -1,7 +1,8 @@
+const moment = require('moment');
+
+// FONTE: https://www.tabnine.com/academy/javascript/how-to-format-date/
+
 module.exports = () => {
   const now = new Date();
-  const date = `${now.getDate()}-${now.getMonth()}-${now.getFullYear()}`;
-  const hour = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-  const msgTime = `${date} ${hour}`;
-  return msgTime;
+  return `${moment(now).format('DD-MM-YYYY')} ${moment(now).format('LTS')}`;
 };
