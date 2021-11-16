@@ -36,7 +36,7 @@ io.on('connection', async (socket) => {
 
   socket.on('message', async ({ chatMessage, nickname }) => {
     const nick = await chatController.getNickname(chatController.onlineUsers, socket.id);
-    const name = nick === socket.id.substr(0, 16) ? nickname : nick;
+    const name = nickname === socket.id ? nick : nickname;
     const sendMessage = await chatController.create({ chat: chatMessage, name, timestamp: time() });
     io.emit('message', sendMessage);
   });
