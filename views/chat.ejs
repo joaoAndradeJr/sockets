@@ -87,7 +87,7 @@
         const li = document.createElement('li');
         li.setAttribute('data-testid', 'message');
         li.setAttribute('class', 'message-li');
-        const liText = document.createTextNode(`${timestamps} - ${nickname}: ${chatMessage}`);
+        const liText = document.createTextNode(message);
         li.appendChild(liText);
         document.getElementById('messages').appendChild(li);
       };

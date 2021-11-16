@@ -13,9 +13,9 @@ const getNickname = async (onlineUsersObj, userId) => {
   return search ? search[1] : false;
 };
 
-const create = async (message) => {
-  const newMessages = await chatModel.create(message);
-  return newMessages;
+const create = async (messagee) => {
+  const { message, nickname, timestamps } = await chatModel.create(messagee);
+  return `${timestamps} - ${nickname}: ${message}`;
 };
 
 module.exports = {
