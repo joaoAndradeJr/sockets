@@ -30,9 +30,7 @@
         </div>
         <div class="online-users">
           <h3>Usuários Online</h3>
-          <ul id="onlineUsers">
-            
-          </ul>
+          <ul id="onlineUsers"></ul>
         </div>
       </div>
       <div class="messages-container">
@@ -112,6 +110,7 @@
       const changeNicknameButton = document.getElementById('nickname-button');
       changeNicknameButton.addEventListener('click', () => {
         nickname = document.getElementById('nickname-box').value;
+        document.getElementById('nickname-box').value = '';
         socket.emit('changeNickname', nickname);
       });
 
@@ -125,10 +124,12 @@
       socket.on('usersOnline', (nickname) => {
         removeOnlineUsers();
         Object.entries(nickname).forEach((element) => {
-          insertOnlineUser(element[1]);
-          console.log(element)
-        })},
-      );
+          element[0] === socket.id ? insertOnlineUser(element[1]) : false;
+        });
+        Object.entries(nickname).forEach((element) => {
+          element[0] !== socket.id ? insertOnlineUser(element[1]) : false;
+        })
+      });
 
       socket.on('message', (message) => insertMessage(message));
 

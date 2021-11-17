@@ -25,7 +25,7 @@ const chatController = require('./controllers/webchat');
 
 io.on('connection', async (socket) => {
   const randomId = socket.id.substr(0, 16);
-  chatController.onlineUsers = { ...chatController.onlineUsers, [socket.id]: randomId };
+  chatController.onlineUsers = { [socket.id]: randomId, ...chatController.onlineUsers };
 
   io.emit('usersOnline', chatController.onlineUsers);
 
